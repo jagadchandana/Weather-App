@@ -60,12 +60,8 @@ public class Manager {
 
         //connects and asks the api to sen the json file
         try {
-            json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid={e673bf4ae281f6e2b9e954d4a08c80fe}&lang=eng&units=metric");
-        } catch (IOException e) {
-            return;
-        }
+            json = readJsonFromUrl("https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=e673bf4ae281f6e2b9e954d4a08c80fe&lang=eng&units=metric");
 
-        //receives the particular data in the read Json File
         json_specific = json.getJSONObject("main");
         this.temperature = json_specific.getInt("temp");
         this.pressure = json_specific.get("pressure").toString();
@@ -81,6 +77,9 @@ public class Manager {
         json_specific = json.getJSONArray("weather").getJSONObject(0);
         this.description = json_specific.get("description").toString();
         this.icon = json_specific.get("icon").toString();
+       } catch (IOException e) {
+            System.out.println("error");
+        }
     }
 
 
