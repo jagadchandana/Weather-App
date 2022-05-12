@@ -47,29 +47,50 @@ public class MainFormController implements Initializable {
     public Label lblCity;
     public Label lblError;
     public JFXComboBox cmbCityCode;
+    public Label lblEmptyError;
 
     Manager manager;// = new Manager(txtLocation.getText());
     String citySet;
-
+    int cityCodeSet;
+    String arr[] = {"1248991","1850147","2644210","2988507","2147714","4930956","1796236","3143244"};
+    private void loadAllCode(){
+        for (String code:arr
+             ) {
+            cmbCityCode.getItems().addAll(code);
+        }
+    }
     public void btnShowOnAction(ActionEvent actionEvent) {
-            //if user enters nothing into cityName field
-            if(txtLocation.getText().equals("")){
-                showToast("City Name cannot be blank");
-            }else {
+
+            if (txtLocation.getText().equals("")) {
+                showToast("City Name cannot be blank", lblEmptyError);
+            } else {
                 try {
                     lblError.setText("");
                     this.citySet = txtLocation.getText().trim();
                     System.out.println(citySet);
                     txtLocation.setText((txtLocation.getText().trim()).toUpperCase());
-                    manager = new Manager(citySet);
                     showWeather();
-                }catch(Exception e){
+                } catch (Exception e) {
                     lblCity.setText("Error!!");
                     lblCity.setTextFill(Color.TOMATO);
-                    showToast("City with the given name was not found.");
+                    showToast("City with the given name was not found.", lblError);
                     reset();
                 }
             }
+    }
+    private void showWeather(){
+        manager.getWeather(citySet);
+        lblCity.setText(Manager.getCity().toUpperCase());
+        lblCity.setTextFill(Color.TOMATO);
+        lblTemp.setText(Manager.getTemperature().toString()+"°C");
+        lblDay.setText(Manager.getDay().toUpperCase());
+        lblDesc.setText(Manager.getDescription().toUpperCase());
+        //  imgWeather.setImage(new Image(ImageSelector.getImage(Manager.getIcon())));
+        lblWind.setText(Manager.getWindSpeed()+" m/s");
+        lblCloud.setText(Manager.getCloudiness()+"%");
+        lblPressure.setText(Manager.getPressure()+" hpa");
+        lblHumidity.setText(Manager.getHumidity()+"%");
+
     }
    ///////////////
    private void handleButtonClicks(javafx.event.ActionEvent ae) {
@@ -113,12 +134,12 @@ public class MainFormController implements Initializable {
     }
 
     //method to show error messages
-    private void showToast(String message) {
-        lblError.setText(message);
-        lblError.setTextFill(Color.TOMATO);
-        lblError.setStyle("-fx-background-color: #fff; -fx-background-radius: 50px;");
+    private void showToast(String message, Label lbl) {
+        lbl.setText(message);
+        lbl.setTextFill(Color.TOMATO);
+        lbl.setStyle("-fx-background-color: #fff; -fx-background-radius: 20px;");
 
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), lblError);
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), lbl);
         fadeIn.setToValue(1);
         fadeIn.setFromValue(0);
         fadeIn.play();
@@ -127,7 +148,7 @@ public class MainFormController implements Initializable {
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.play();
             pause.setOnFinished(event2 -> {
-                FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), lblError);
+                FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), lbl);
                 fadeOut.setToValue(0);
                 fadeOut.setFromValue(1);
                 fadeOut.play();
@@ -135,24 +156,26 @@ public class MainFormController implements Initializable {
         });
     }
 
-    //actual method to call and get the weather and populate the scene
-    private void showWeather(){
-       manager.getWeather();
-        lblCity.setText(Manager.getCity().toUpperCase());
-        lblTemp.setText(Manager.getTemperature().toString()+"°C");
-        lblDay.setText(Manager.getDay().toUpperCase());
-        lblDesc.setText(Manager.getDescription().toUpperCase());
-      //  imgWeather.setImage(new Image(ImageSelector.getImage(Manager.getIcon())));
-        lblWind.setText(Manager.getWindSpeed()+" m/s");
-        lblCloud.setText(Manager.getCloudiness()+"%");
-        lblPressure.setText(Manager.getPressure()+" hpa");
-        lblHumidity.setText(Manager.getHumidity()+"%");
-
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        loadAllCode();
+        cmbCityCode.valueProperty().addListener(observable -> {
+            String code = String.valueOf(cmbCityCode.getSelectionModel().getSelectedItem());
+            switch (code){
+                case "1248991":
+                    txtLocation.setText("Colombo");
+                    break;
+                case "1850147":
+                    txtLocation.setText("Tokyo");
+                    break;
+                case "2644210":
+                    txtLocation.setText("Liverpool");
+                    break;
+                default:
+                    txtLocation.setText("");
+            }
+        });
         //////////////////////
         imgCloseBtn.setOnMouseClicked(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure?", ButtonType.YES,ButtonType.NO);
@@ -180,17 +203,17 @@ public class MainFormController implements Initializable {
         //  set.setVisible(false);
         //cancel.setVisible(false);
         lblError.setText("");
-        manager = new Manager(citySet);
+        manager = new Manager(txtLocation.getText());
         //  invis.requestFocus();
 
         //try catch block to see if there is internet and disabling ecery field
         try{
-            showWeather();
+         //   showWeather();
         } catch (Exception e){
             lblCity.setText("Error!! - No Internet");
             lblError.setText("Error - No Internet");
             lblCity.setTextFill(Color.TOMATO);
-            showToast("Internet Down. Please Connect");
+            showToast("Internet Down. Please Connect",lblError);
             reset();
             //  change.setDisable(true);
             txtLocation.setText("");
@@ -201,7 +224,7 @@ public class MainFormController implements Initializable {
     }
 
     public void btn(ActionEvent actionEvent) {
-       showWeather();
+      // showWeather();
     }
 
     /////////////

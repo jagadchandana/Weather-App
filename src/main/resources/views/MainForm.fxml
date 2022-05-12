@@ -138,5 +138,6 @@
       </Label>
       <Button layoutX="359.0" layoutY="216.0" mnemonicParsing="false" onAction="#btn" text="Button" />
       <JFXComboBox fx:id="cmbCityCode" layoutX="507.0" layoutY="104.0" prefHeight="25.0" prefWidth="86.0" promptText="City Code" />
+      <Label fx:id="lblEmptyError" layoutX="367.0" layoutY="136.0" prefHeight="17.0" prefWidth="222.0" />
    </children>
 </AnchorPane>

@@ -21,10 +21,7 @@ public class Manager {
     private static String pressure;
     private static String humidity;
 
-    public Manager(String city) {
-        this.city = city;
-    }
-
+    public Manager(String city){this.city = city;}
     //Build a String from the read Json file
     private String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -49,7 +46,46 @@ public class Manager {
     }
 
     //method to get the weather of the selected city
-    public void getWeather(){
+   /* public void getWeatherFromCode(int city){
+
+        JSONObject json;
+        JSONObject json_specific;
+        try {
+            json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/forecast?id="+city+"&APPID=e673bf4ae281f6e2b9e954d4a08c80fe&lang=eng&units=metric");
+            System.out.println(json);
+           *//* json_specific = json.getJSONObject("main");
+            this.temperature = json_specific.getInt("temp");
+            this.pressure = json_specific.get("pressure").toString();
+            this.humidity = json_specific.get("humidity").toString();
+            this.windSpeed = json_specific.get("speed").toString();
+            this.cloudiness = json_specific.get("clouds").toString();
+            this.description = json_specific.get("description").toString();*//*
+            json_specific = json.getJSONObject("main");
+            this.temperature = json_specific.getInt("temp");
+            this.pressure = json_specific.get("pressure").toString();
+            this.humidity = json_specific.get("humidity").toString();
+            json_specific = json.getJSONObject("wind");
+            this.windSpeed = json_specific.get("speed").toString();
+            json_specific = json.getJSONObject("clouds");
+            this.cloudiness = json_specific.get("all").toString();
+
+
+            c.add(Calendar.DATE, d);
+            this.day = df2.format(c.getTime());
+
+            json_specific = json.getJSONArray("weather").getJSONObject(0);
+            this.description = json_specific.get("description").toString();
+            this.icon = json_specific.get("icon").toString();
+
+
+            System.out.println(json.get("id"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }*/
+    public void getWeather(String city){
         int d = 0;
 
         JSONObject json;
@@ -57,12 +93,15 @@ public class Manager {
 
         SimpleDateFormat df2 = new SimpleDateFormat("EEEE", Locale.ENGLISH); //Entire word/day as output
         Calendar c = Calendar.getInstance();
-
         //connects and asks the api to sen the json file
         try {
-            json = readJsonFromUrl("https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=e673bf4ae281f6e2b9e954d4a08c80fe&lang=eng&units=metric");
+            if (city.matches("\\d+")){
+                json = readJsonFromUrl("https://api.openweathermap.org/data/2.5/weather?id="+city+"&appid=e673bf4ae281f6e2b9e954d4a08c80fe&lang=eng&units=metric");
+            }else{
+                json = readJsonFromUrl("https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=e673bf4ae281f6e2b9e954d4a08c80fe&lang=eng&units=metric");
+            }
 
-        json_specific = json.getJSONObject("main");
+            json_specific = json.getJSONObject("main");
         this.temperature = json_specific.getInt("temp");
         this.pressure = json_specific.get("pressure").toString();
         this.humidity = json_specific.get("humidity").toString();
@@ -71,12 +110,17 @@ public class Manager {
         json_specific = json.getJSONObject("clouds");
         this.cloudiness = json_specific.get("all").toString();
 
+
         c.add(Calendar.DATE, d);
         this.day = df2.format(c.getTime());
 
         json_specific = json.getJSONArray("weather").getJSONObject(0);
         this.description = json_specific.get("description").toString();
         this.icon = json_specific.get("icon").toString();
+        this.city = json.getString("name");
+
+            System.out.println(json.get("id"));
+
        } catch (IOException e) {
             System.out.println("error");
         }
