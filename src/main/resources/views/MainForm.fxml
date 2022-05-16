@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MainUI" prefHeight="400.0" prefWidth="572.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainFormController">
+<AnchorPane fx:id="MainUI" prefHeight="400.0" prefWidth="572.0" style="-fx-background-color: white;" stylesheets="@../style/Styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainFormController">
    <children>
       <AnchorPane prefHeight="24.0" prefWidth="600.0" style="-fx-background-color: #34495e;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -58,7 +58,7 @@
          </image>
       </ImageView>
       <JFXTextField fx:id="txtLocation" focusColor="#05f07d" labelFloat="true" layoutX="275.0" layoutY="141.0" promptText="City" unFocusColor="#34495e" />
-      <JFXButton fx:id="btnShow" buttonType="RAISED" layoutX="483.0" layoutY="188.0" onAction="#btnShowOnAction" styleClass="btnshow" text="Show">
+      <JFXButton fx:id="btnShow" buttonType="RAISED" layoutX="483.0" layoutY="188.0" onAction="#btnShowOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="btnShow" text="Show" textFill="#fff9f9">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -167,7 +167,7 @@
          </font>
       </Label>
       <Label fx:id="lblRefresh" layoutX="88.0" layoutY="368.0" prefHeight="17.0" prefWidth="126.0" textFill="#05f07d" />
-      <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="420.0" layoutY="188.0" onAction="#btnAddOnAction" styleClass="btnadd" text="Add">
+      <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="392.0" layoutY="188.0" onAction="#btnAddOnAction" prefHeight="25.0" prefWidth="68.0" styleClass="btnAdd" text="Add" textFill="#fff9f9">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
