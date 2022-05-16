@@ -1,44 +1,38 @@
-package Entity;
+package dto;
 
-import javax.persistence.*;
-
-@Entity(name="lastweather")
-public class LastWeather extends SuperEntity {
-    @Id
-    private int code;
+public class LastWeathTM {
+    private String code;
     private String name;
     private String temp;
     private String desc;
-    private String wind;
+    private String windSpeed;
     private String cloud;
     private String press;
-    private String humidity;
+    private String humid;
     private String date;
     private String time;
-    private String img;
 
-    public LastWeather() {
+    public LastWeathTM() {
     }
 
-    public LastWeather(int code, String name, String temp, String desc, String wind, String cloud, String press, String humidity, String date, String time,String img) {
+    public LastWeathTM(String code, String name, String temp, String desc, String windSpeed, String cloud, String press, String humid, String date, String time) {
         this.code = code;
         this.name = name;
         this.temp = temp;
         this.desc = desc;
-        this.wind = wind;
+        this.windSpeed = windSpeed;
         this.cloud = cloud;
         this.press = press;
-        this.humidity = humidity;
+        this.humid = humid;
         this.date = date;
         this.time = time;
-        this.img = img;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -66,12 +60,12 @@ public class LastWeather extends SuperEntity {
         this.desc = desc;
     }
 
-    public String getWind() {
-        return wind;
+    public String getWindSpeed() {
+        return windSpeed;
     }
 
-    public void setWind(String wind) {
-        this.wind = wind;
+    public void setWindSpeed(String windSpeed) {
+        this.windSpeed = windSpeed;
     }
 
     public String getCloud() {
@@ -90,12 +84,12 @@ public class LastWeather extends SuperEntity {
         this.press = press;
     }
 
-    public String getHumidity() {
-        return humidity;
+    public String getHumid() {
+        return humid;
     }
 
-    public void setHumidity(String humidity) {
-        this.humidity = humidity;
+    public void setHumid(String humid) {
+        this.humid = humid;
     }
 
     public String getDate() {
@@ -112,14 +106,5 @@ public class LastWeather extends SuperEntity {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String time) {
-        this.img = img;
     }
 }

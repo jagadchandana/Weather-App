@@ -27,7 +27,8 @@ public class ImageSelector {
                 return "/images/13.png";
             case "50d": case "50n":
                 return "/images/50.png";
+            default:
+                return "/images/error.png";
         }
-        return "images/01d.jpg";
     }
 }

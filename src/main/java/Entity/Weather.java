@@ -1,11 +1,7 @@
 package Entity;
 
-import javax.persistence.*;
-
-@Entity(name="lastweather")
-public class LastWeather extends SuperEntity {
-    @Id
-    private int code;
+public class Weather extends SuperEntity{
+    private String code;
     private String name;
     private String temp;
     private String desc;
@@ -15,30 +11,12 @@ public class LastWeather extends SuperEntity {
     private String humidity;
     private String date;
     private String time;
-    private String img;
 
-    public LastWeather() {
-    }
-
-    public LastWeather(int code, String name, String temp, String desc, String wind, String cloud, String press, String humidity, String date, String time,String img) {
-        this.code = code;
-        this.name = name;
-        this.temp = temp;
-        this.desc = desc;
-        this.wind = wind;
-        this.cloud = cloud;
-        this.press = press;
-        this.humidity = humidity;
-        this.date = date;
-        this.time = time;
-        this.img = img;
-    }
-
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -112,14 +90,5 @@ public class LastWeather extends SuperEntity {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String time) {
-        this.img = img;
     }
 }

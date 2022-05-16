@@ -1,10 +1,6 @@
-package Entity;
+package dto;
 
-import javax.persistence.*;
-
-@Entity(name="lastweather")
-public class LastWeather extends SuperEntity {
-    @Id
+public class LastWeatherDTO {
     private int code;
     private String name;
     private String temp;
@@ -17,10 +13,11 @@ public class LastWeather extends SuperEntity {
     private String time;
     private String img;
 
-    public LastWeather() {
+
+    public LastWeatherDTO() {
     }
 
-    public LastWeather(int code, String name, String temp, String desc, String wind, String cloud, String press, String humidity, String date, String time,String img) {
+    public LastWeatherDTO(int code, String name, String temp, String desc, String wind, String cloud, String press, String humidity, String date, String time,String img) {
         this.code = code;
         this.name = name;
         this.temp = temp;
@@ -114,12 +111,13 @@ public class LastWeather extends SuperEntity {
         this.time = time;
     }
 
-
     public String getImg() {
         return img;
     }
 
-    public void setImg(String time) {
+    public void setImg(String img) {
         this.img = img;
     }
+
+
 }
