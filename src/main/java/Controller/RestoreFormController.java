@@ -139,7 +139,7 @@ String[] code = manager.readJsonFromFile();
 
         l1.setText(Manager.getDay());
         l2.setText(Manager.getCity());
-        l2.setTextFill(Color.TOMATO);
+        l2.setTextFill(Color.DARKRED);
         l3.setText(Manager.getTemperature()+"°C");
         l4.setText(Manager.getDescription());
        }catch (RuntimeException r ){

@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +35,14 @@ public class LastWeatherDaoImpl implements LastWeatherDAO {
         session.update(r);
         transaction.commit();
         return true;*/
-        return CrudUtil.execute("INSERT INTO lastweather VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-                r.getName(),r.getTemp(),r.getDesc(),r.getWind(),r.getCloud(),
-                r.getPress(),r.getHumidity(),r.getDate(),r.getTime(),r.getImg(),r.getCode());
+        try {
+            return CrudUtil.execute("UPDATE lastWeather SET name=?, temp=?, desc=?, wind=?, cloud=?, press=?, humidity=?, date=?, time=?, img=? WHERE code=?",
+                    r.getName(), r.getTemp(), r.getDesc(), r.getWind(), r.getCloud(),
+                    r.getPress(), r.getHumidity(), r.getDate(), r.getTime(), r.getImg(), r.getCode());
+        }catch (SQLSyntaxErrorException e){
+            System.out.println(e);
+        }
+        return false;
     }
 
     @Override

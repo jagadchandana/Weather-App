@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.ResponseCache;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,11 +29,8 @@ public class Manager {
     public Manager(String city) {
         this.city = city;
     }
+    public Manager() {}
 
-    public Manager() {
-    }
-
-    //Build a String from the read Json file
     private String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -41,8 +39,9 @@ public class Manager {
         }
         return sb.toString();
     }
+    //////////---Build a String from the read Json file
 
-    //Reads and returns the JsonObject
+
     public JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
         try {
@@ -54,18 +53,16 @@ public class Manager {
             is.close();
         }
     }
+    ///////////////--Reads and returns the JsonObject
 
     public String[] readJsonFromFile() {
 
         try {
             String jsonText = readAll(new FileReader("F:/Fidnes-Assignment/src/main/resources/file/cities.json"));
-
             JSONObject json = new JSONObject(jsonText);
             String[] code =new String[json.getJSONArray("List").length()] ;
             for (int i = 0; i < json.getJSONArray("List").length()-1; i++) {
                 code[i] = json.getJSONArray("List").getJSONObject(i).getString("CityCode");
-                System.out.println(code[i]);
-
             }
             return code;
         } catch (FileNotFoundException e) {
@@ -73,41 +70,35 @@ public class Manager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return null;
     }
+    //////////////--Read json file
 
-
-
-    public void writeJsonFile(){
-       getWeather("");
-    }
 
     public void getWeather(String city){
         int d = 0;
 
         JSONObject json;
-        JSONObject json_specific; //get specific data in jsonobject variable
+        JSONObject json_specific; /////////--get specific data in jsonobject variable
 
         SimpleDateFormat df2 = new SimpleDateFormat("EEEE", Locale.ENGLISH); //Entire word/day as output
         Calendar c = Calendar.getInstance();
-        //connects and asks the api to sen the json file
+        ////////////--connects and asks the api to sen the json file
         try {
             if (city.matches("\\d+")){
                 json = readJsonFromUrl("https://api.openweathermap.org/data/2.5/weather?id="+city+"&appid=e673bf4ae281f6e2b9e954d4a08c80fe&lang=eng&units=metric");
             }else{
                 json = readJsonFromUrl("https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=e673bf4ae281f6e2b9e954d4a08c80fe&lang=eng&units=metric");
             }
-            ///
+
             FileWriter file = new FileWriter("F:/Fidnes-Assignment/src/main/resources/file/weather.json");
 
             file.write(json.toString());
                 file.write("\n");
                 file.flush();
                 file.close();
-            ///
-            json_specific = json.getJSONObject("main");
+
+        json_specific = json.getJSONObject("main");
         this.temperature = json_specific.getInt("temp");
         this.pressure = json_specific.get("pressure").toString();
         this.humidity = json_specific.get("humidity").toString();
@@ -132,7 +123,7 @@ public class Manager {
     }
 
 
-    //Setters for all the private fields
+    /////////////--Setters for all the private fields
     public static String getCode(){ return code;}
 
     public static String getCity() {
